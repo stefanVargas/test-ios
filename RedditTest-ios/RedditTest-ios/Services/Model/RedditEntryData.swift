@@ -7,9 +7,7 @@
 
 import Foundation
 
-struct RedditEntryData: Codable {
-    
-    var id: String?
+struct RedditEntryData: Codable {    
     var title: String?
     var author: String?
     var thumbnail: String?
@@ -18,6 +16,10 @@ struct RedditEntryData: Codable {
     
     private enum CodingKeys: String, CodingKey {
         case commentsNumber = "num_comments"
+        case author = "author_fullname"
+        case created = "created_utc"
+        case thumbnail = "thumbnail"
+        case title = "title"
     }
     
 }

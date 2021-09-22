@@ -45,7 +45,7 @@ extension RefreshingTableViewCell: ViewCodeProtocol {
     }
     
     func layoutHierarchy() {
-        let verticalPattern = "V:|[v0]|"
+        let verticalPattern = "V:|-8-[v0(64)]-8-|"
         let vertivalDefaultPattern = "V:|-[v0]-|"
         let horizontalDefaultPattern = "H:|-[v0]-|"
         let widthQuarter = frame.width / 4.0

@@ -11,7 +11,7 @@ class RedditListTableViewCell: UITableViewCell {
 
     @IBOutlet private(set) weak var thumbnailView: UIImageView?
     
-    @IBOutlet private(set) weak var titleLable: UILabel?
+    @IBOutlet private(set) weak var titleLabel: UILabel?
     
     @IBOutlet private(set) weak var authorLabel: UILabel?
     
@@ -22,6 +22,27 @@ class RedditListTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    func setup(with data: RedditEntryData) {
+        self.backgroundColor = .redditPurple
+        if let imageUrl = data.thumbnail {
+            thumbnailView?.imageFromURL(imageUrl)
+        } else {
+            thumbnailView?.image = UIImage(named: AppIdentifiers.defaultThumbnail)
+        }
+        
+        let title = data.title ?? String()
+        titleLabel?.text = title
+        
+        let author = data.author ?? String()
+        authorLabel?.text = author
+        
+        let comments = data.commentsNumber ?? Int.zero
+        commentsLabel?.text = "comments: \(comments)"
+        
+        let entryDate = ((data.created ?? Double.zero) - Double(Int(Date().timeIntervalSince1970))).rounded()
+        entryDateLabel?.text = "date: \(Int(entryDate) / 3600)"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -19,6 +19,8 @@ class ListCoordinator: BaseCoordinator {
     
     var next: BaseCoordinator?
     
+    var entryData: RedditEntryData?
+    
     init(navigation: UINavigationController, controller: BaseViewController) {
         self.controller = controller
         self.navigation = navigation
@@ -31,11 +33,16 @@ class ListCoordinator: BaseCoordinator {
     }
     
     func go(to flow: CoordinatorFlow) {
-        
         switch flow {
         case .welcome:
-            doPresentaion(action: .push)
+            navigation.popViewController(animated: true)
         case .details:
+            guard let detailsController = UIViewController.instanceBaseController(with: AppIdentifiers.detailsController) as? DetailsViewController,
+                  let entry = entryData
+            else { return }
+            detailsController.start(entry: entry)
+            next = DetailsCoordinator(navigation: self.navigation,
+                                      controller: detailsController)
             next?.start(previous: self)
         default:
             return

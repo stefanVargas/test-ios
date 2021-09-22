@@ -8,6 +8,15 @@
 import Foundation
 
 enum NetworkConstants {
-    static let baseUrL =  "http://www.reddit.com/dev/api/top"
-    static let count: Int = 50
+    static let baseUrL =  "https://api.reddit.com"
+    static let count = "50"
+    
+    enum Path {
+        static let top = "/top"
+        static let new = "/new"
+        static let hot = "/hot"
+        static let random = "/random"
+        static let rising = "/rising"
+    }
 }
+

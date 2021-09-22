@@ -8,20 +8,18 @@
 import Foundation
 
 protocol APIProviderProtocol {
-    func getEntryList(params: RedditRequest,
+    func getEntryList(params: RedditRequest, path: String,
                       completion: @escaping ResponseCompletion)
     func getThumbImage(fromUrl: String, completion: @escaping DataCompletion)
 
 }
 
 class APIProvider: APIProviderProtocol {
-    
-    
-    func getEntryList(params: RedditRequest, completion: @escaping ResponseCompletion) {
-        let baseURL =  NetworkConstants.baseUrL
-        let endpoint = "\(baseURL)"
         
-        guard let request = APIRequest(requestMethod: .GET, urlString: endpoint) as URLRequest? else { return }
+    func getEntryList(params: RedditRequest, path: String, completion: @escaping ResponseCompletion) {
+        let endpoint =  NetworkConstants.baseUrL
+        
+        guard let request = APIRequest(requestMethod: .GET, urlString: endpoint, path: path, bodyParams: params.getParams()) as URLRequest? else { return }
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             
@@ -31,12 +29,6 @@ class APIProvider: APIProviderProtocol {
             
             guard let data = data else {
                 return completion(.failure(error: .invalidData))
-            }
-            
-            guard let stringResponse = String(data: data,
-                                              encoding: String.Encoding.utf8)
-            else {
-                return completion(.failure(error: .invalidResponse))
             }
                         
             guard let responseResultData = try? JSONDecoder().decode(RedditResponse.self, from: data) else {

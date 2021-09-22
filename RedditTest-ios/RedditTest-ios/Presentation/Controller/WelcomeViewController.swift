@@ -15,7 +15,6 @@ class WelcomeViewController: BaseViewController {
     override func loadView() {
         super.loadView()
         self.view = mainView
-        
     }
     
     override func viewDidLoad() {
@@ -29,7 +28,6 @@ class WelcomeViewController: BaseViewController {
     
     @objc
     func goToList() {
-        print("!@#$@#$#@$@#$#@")
         coordinator?.go?(to: .list)
     }
     

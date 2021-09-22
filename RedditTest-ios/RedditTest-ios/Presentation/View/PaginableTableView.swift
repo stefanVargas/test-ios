@@ -8,16 +8,17 @@
 import UIKit
 
  @objc
-public protocol PaginableTableViewDelegate: AnyObject {
+protocol PaginableTableViewDelegate: AnyObject {
      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
      @objc optional func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat
      @objc optional func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
      @objc optional func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath)
-     func loadMore(_ pageNumber: Int, _ pageSize: Int, onSuccess: ((Bool) -> Void)?, onError: ((Error) -> Void)?)
+     func loadMore(_ pageSize: Int, onSuccess: ((Bool) -> Void)?, onError: ((Error) -> Void)?)
      @objc optional func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    @objc optional func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
  }
 
-public protocol PaginableTableViewDataSource: AnyObject {
+ protocol PaginableTableViewDataSource: AnyObject {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     func numberOfSections(in tableView: UITableView) -> Int
@@ -25,12 +26,10 @@ public protocol PaginableTableViewDataSource: AnyObject {
 
 class PaginableTableView: UITableView {
     
-    public var pageSize = 20
+    var pageSize = 50
     private var hasMoreData = true
-    private(set) var currentPage = 1
     private(set) var isLoading = false
-    public var firstPage = 1
-    public var placeholderRowsNumber = 7
+    var placeholderRowsNumber = 7
     
     lazy var refreshControltableView: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -51,12 +50,11 @@ class PaginableTableView: UITableView {
         }
     }
     
-    public var customReloadDataBlock: (() -> Void)?
+    var customReloadDataBlock: (() -> Void)?
     
     var sections = 0
-    var loadMoreViewHeight: CGFloat = 125
+    var loadMoreViewHeight: CGFloat = 86.0
     var heightForHeaderInSection: CGFloat = 0
-    public var headerTitle = String()
 
     /// Delegates
     weak open var paginableDelegate: PaginableTableViewDelegate?
@@ -78,8 +76,9 @@ class PaginableTableView: UITableView {
         self.dataSource = self
         self.prefetchDataSource = self
         self.alwaysBounceVertical = true
-        self.register(RedditListTableViewCell.self,
-                      forCellReuseIdentifier: AppIdentifiers.redditListTableViewCell)
+        let cellNib = UINib(nibName: AppIdentifiers.redditListTableViewCell, bundle:
+                                Bundle(for: PaginableTableView.self))
+        self.register(cellNib, forCellReuseIdentifier: AppIdentifiers.redditListTableViewCell)
         self.register(RefreshingTableViewCell.self, forCellReuseIdentifier: AppIdentifiers.refreshingTableViewCell)
 
         self.enablePullToRefresh = true
@@ -108,16 +107,14 @@ class PaginableTableView: UITableView {
     func load(refresh: Bool = false) {
         
         if refresh {
-            currentPage = firstPage
             hasMoreData = true
         }
         
         if !hasMoreData || isLoading { return }
         
         isLoading = true
-        paginableDelegate?.loadMore(currentPage, pageSize, onSuccess: { hasMore in
+        paginableDelegate?.loadMore(pageSize, onSuccess: { hasMore in
             self.hasMoreData = hasMore
-            self.currentPage += 1
             self.isLoading = false
             self.refreshControltableView.endRefreshing()
             if self.customReloadDataBlock != nil {
@@ -155,6 +152,7 @@ extension PaginableTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == sections - 1 {
+            self.allowsSelection = false
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AppIdentifiers.refreshingTableViewCell, for: indexPath) as? RefreshingTableViewCell else { return UITableViewCell() }
             cell.loaderSign.hidesWhenStopped = true
             if self.isLoading {
@@ -165,6 +163,7 @@ extension PaginableTableView: UITableViewDataSource {
             }
             return cell
         } else {
+            self.allowsSelection = true
             return paginableDataSource?.tableView(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
         }
     }
@@ -187,7 +186,11 @@ extension PaginableTableView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return headerTitle
+        return Texts.welcomeTitle
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        paginableDelegate?.tableView?(tableView, didSelectRowAt: indexPath)
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

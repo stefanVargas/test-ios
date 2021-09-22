@@ -13,15 +13,31 @@ class ListViewController: BaseViewController {
     
     @IBOutlet private(set) weak var paginableTableView: PaginableTableView?
     
+    private var viewModel: ListViewModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        setupViewModel()
+        self.view.backgroundColor = .redditBlue
+        setupTableView()
     }
     
-    func setupTableView(){
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    private func setupViewModel() {
+        viewModel = ListViewModel(view: paginableTableView ?? UIView())
+        viewModel?.delegate = self
+        viewModel?.setAction(backToWelcome)
+        self.listTitleLabel?.text = viewModel?.title
+        self.listTitleLabel?.insertLine(width: 1.0, color: .redditOrange)
+    }
+    
+    private func setupTableView(){
         paginableTableView?.paginableDataSource = self
         paginableTableView?.paginableDelegate = self
-        paginableTableView?.allowsSelection = false
         paginableTableView?.alwaysBounceVertical = true
         paginableTableView?.autoresizingMask = UIView.AutoresizingMask.flexibleHeight
         paginableTableView?.backgroundColor = .clear
@@ -30,11 +46,12 @@ class ListViewController: BaseViewController {
         paginableTableView?.enablePullToRefresh = true
         paginableTableView?.loadData(refresh: true)
         paginableTableView?.tableFooterView = UIView()
-//            self.currentPage = repoTableView?.currentPage ?? 0
-            
-        }
-
-
+    }
+    
+    @objc
+    func backToWelcome() {
+        coordinator?.go?(to: .welcome)
+    }
 }
 
 extension ListViewController: PaginableTableViewDataSource {
@@ -43,57 +60,95 @@ extension ListViewController: PaginableTableViewDataSource {
         return 1
     }
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Int.zero
+        let list = viewModel?.listChildren
         
+        return list?.count ?? Int.zero
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let index = indexPath.row
+        let list = viewModel?.listChildren
+        let item = list?[index]
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: AppIdentifiers.redditListTableViewCell, for: indexPath) as? RedditListTableViewCell {
             cell.tag = indexPath.row
             
-            cell.thumbnailView?.image = UIImage(named: AppIdentifiers.defaultThumbnail)
-            
-//            if let imageUrl = self.repoList?.repositories[index].owner?.avatarUrl {
-//                cell.photo.imageFromURL(imageUrl)
-//                cell.photo.setRoundedCorners()
-//            }
-//            
-//            let nameText =  self.repoList?.repositories[index].name
-//            cell.repoNameLabel.text = nameText
-//            
-//            if let authorText = self.repoList?.repositories[index].owner?.login {
-//                cell.authorNameLabel.text =  Project.Localizable.Repo.author.localized + authorText
-//                
-//                cell.accessibilityLabel = Project.Localizable.Accessiblity.repository.localized + (nameText ?? String()) +  Project.Localizable.Repo.author.localized + authorText
-//            }
-//            
-//            if let starText = self.repoList?.repositories[index].starCount?.description {
-//                cell.starsLabel.text =  Project.Localizable.Repo.stars.localized + starText
-//                
-//                cell.accessibilityValue = Project.Localizable.Accessiblity.stars.localized + starText
-//            }
-            
+            if let data = item?.data {
+                cell.setup(with: data)
+            }
         
             return cell
         }
         
         return UITableViewCell()
     }
-    
 }
 
 extension ListViewController: PaginableTableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let heightForRow: CGFloat = 72.0
+        let heightForRow: CGFloat = 86.0
         
         return heightForRow
     }
     
-    func loadMore(_ pageNumber: Int, _ pageSize: Int, onSuccess: ((Bool) -> Void)?, onError: ((Error) -> Void)?) {
-   
+    func loadMore(_ pageSize: Int, onSuccess: ((Bool) -> Void)?, onError: ((Error) -> Void)?) {
+        let count = viewModel?.listChildren?.count ?? Int.zero
+        let params = RedditRequest(after: viewModel?.after, before: nil,
+                                   count: String(count), limit: String(pageSize))
+        
+        viewModel?.fetchEntries(params: params, completion: { [paginableTableView] in
+            DispatchQueue.main.async {
+                
+                onSuccess?(self.viewModel?.hasMore ?? true)
+                onError?(RedditError.reloadError)
+                
+                paginableTableView?.reloadData()
+            }
+        })
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let listCoordinator = coordinator as? ListCoordinator else { return }
+        listCoordinator.entryData = prepareDetails(for: indexPath)
+        listCoordinator.go(to: .details)
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let heightForRow: CGFloat = 86.0
+        
+        return heightForRow
+    }
+}
+
+extension ListViewController: ListViewModelDelegate {
+    
+    
+    func prepareDetails(for index: IndexPath) -> RedditEntryData {
+        let list = viewModel?.listChildren
+        let item = list?[index.row]
+        
+        let entry = RedditEntryData(title: item?.data?.title,
+                                    author: item?.data?.author,
+                                    thumbnail: item?.data?.thumbnail,
+                                    commentsNumber: item?.data?.commentsNumber,
+                                    created: item?.data?.created)
+        
+        return entry
+    }
+    
+    
+    func showError(error: RedditError) {
+        let alertController = UIAlertController(title: "Error", message: error.rawValue, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "Back", style: .cancel) { action in
+            (self.viewModel?.action ?? { })()
+        }
+        
+        alertController.addAction(action)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
 }

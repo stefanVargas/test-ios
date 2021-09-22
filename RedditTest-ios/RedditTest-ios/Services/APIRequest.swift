@@ -19,17 +19,21 @@ class APIRequest: NSMutableURLRequest {
         case PATCH
     }
     
-    convenience init?(requestMethod: Method, urlString: String, bodyParams: [String: Any]? = nil) {
+    convenience init?(requestMethod: Method, urlString: String, path: String, bodyParams: [String: String]? = nil) {
         
-        guard let url =  URL.init(string: urlString) else { return nil }
-        let path = NetworkConstants.path
-        self.init(url: url.appendingPathComponent(path))
+        guard let url = URL(string: urlString),
+              var urlComponents =  URLComponents(url: url, resolvingAgainstBaseURL: true) else { return nil }
+        urlComponents.queryItems = bodyParams?.map { (key, value) in
+            URLQueryItem(name: key, value: value)
+        }
+                
+        urlComponents.path = path
+        guard let NewUrl = urlComponents.url  else { return nil }
+        
+        self.init(url: NewUrl)
+        
         self.httpMethod = requestMethod.rawValue
         self.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        if let bodyParams = bodyParams {
-            let body = try? JSONSerialization.data(withJSONObject: bodyParams, options: .prettyPrinted)
-            self.httpBody = body
-        }
+        setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
     }
 }

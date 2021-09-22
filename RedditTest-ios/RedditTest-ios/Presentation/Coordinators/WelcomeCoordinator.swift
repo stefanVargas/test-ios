@@ -40,6 +40,7 @@ class WelcomeCoordinator: BaseCoordinator {
             let listController = UIViewController.instanceBaseController(with: AppIdentifiers.listController)
             let listCoordinator = ListCoordinator(navigation: self.navigation, controller: listController)
             next = listCoordinator
+            listController.coordinator = next
             next?.start(previous: self)
         default:
             return
