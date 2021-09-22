@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+protocol ViewCodeProtocol: AnyObject {
+    func loadViewCode()
+    func addSubviews()
+    func layoutHierarchy()
+}
+
+extension ViewCodeProtocol {
+    
+    func loadViewCode() {
+        addSubviews()
+        layoutHierarchy()
+    }
+}

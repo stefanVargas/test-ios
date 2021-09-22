@@ -7,23 +7,30 @@
 
 import UIKit
 
-class WelcomeViewController: UIViewController {
+class WelcomeViewController: BaseViewController {
+    
+    private lazy var mainView =  WelcomeMainView()
+    private var viewModel: WelcomeViewModel?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    override func loadView() {
+        super.loadView()
+        self.view = mainView
+        
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel = WelcomeViewModel(view: mainView)
+        viewModel?.setAction(goToList)
+        viewModel?.bind()
+        navigationController?.setNavigationBarHidden(true, animated: true)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
-
+    
+    @objc
+    func goToList() {
+        print("!@#$@#$#@$@#$#@")
+        coordinator?.go?(to: .list)
+    }
+    
 }

@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+enum Texts {
+    static let welcomeTitle = "Reddit List"
+    static let buttonTitle = "enter"
+    static let refreshPull = "Puxe para atualizar"
+    static let loading = "carregando"
+}

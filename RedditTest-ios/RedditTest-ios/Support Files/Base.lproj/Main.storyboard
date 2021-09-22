@@ -1,24 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Welcome View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="WelcomeViewController" customModule="RedditTest_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-72" y="84"/>
+        </scene>
+        <!--List View Controller-->
+        <scene sceneID="ivH-eA-J4V">
+            <objects>
+                <viewController storyboardIdentifier="ListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HgQ-FM-AQs" customClass="ListViewController" customModule="RedditTest_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZFt-gA-146">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="....." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c4x-D8-OJv">
+                                <rect key="frame" x="64.5" y="72" width="285" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="a9h-Vz-b9R"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="b9f-8C-M1k"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="285" id="pUK-L4-5ne"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eK4-Pe-MOn" customClass="PaginableTableView" customModule="RedditTest_ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="134" width="414" height="720"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="3QO-d1-fKJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="3QO-d1-fKJ" firstAttribute="trailing" secondItem="eK4-Pe-MOn" secondAttribute="trailing" id="3RK-hT-VCp"/>
+                            <constraint firstItem="c4x-D8-OJv" firstAttribute="centerX" secondItem="ZFt-gA-146" secondAttribute="centerX" id="85H-Ws-3oH"/>
+                            <constraint firstItem="c4x-D8-OJv" firstAttribute="top" secondItem="3QO-d1-fKJ" secondAttribute="top" constant="28" id="B8K-Su-Lpk"/>
+                            <constraint firstItem="eK4-Pe-MOn" firstAttribute="leading" secondItem="3QO-d1-fKJ" secondAttribute="leading" id="ixw-pG-Loj"/>
+                            <constraint firstItem="3QO-d1-fKJ" firstAttribute="bottom" secondItem="eK4-Pe-MOn" secondAttribute="bottom" constant="8" id="pmR-eF-hzV"/>
+                            <constraint firstItem="eK4-Pe-MOn" firstAttribute="top" secondItem="c4x-D8-OJv" secondAttribute="bottom" constant="28" id="uxC-aI-5Ib"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="listTitleLabel" destination="c4x-D8-OJv" id="gaH-pP-xrb"/>
+                        <outlet property="paginableTableView" destination="eK4-Pe-MOn" id="RWl-Hz-wA6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wYG-u8-mBN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="692.75362318840587" y="69.642857142857139"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -1,14 +1,13 @@
 //
-//  RedditTest_iosTests.swift
+//  ListViewControllerTests.swift
 //  RedditTest-iosTests
 //
-//  Created by Stefan V. de Moraes on 19/09/21.
+//  Created by Stefan V. de Moraes on 22/09/21.
 //
 
 import XCTest
-@testable import RedditTest_ios
 
-class RedditTest_iosTests: XCTestCase {
+class ListViewControllerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
