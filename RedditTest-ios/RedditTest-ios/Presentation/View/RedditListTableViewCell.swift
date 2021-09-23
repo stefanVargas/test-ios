@@ -26,10 +26,10 @@ class RedditListTableViewCell: UITableViewCell {
     
     func setup(with data: RedditEntryData) {
         self.backgroundColor = .redditPurple
-        if let imageUrl = data.thumbnail {
+        thumbnailView?.image = UIImage(named: AppIdentifiers.defaultThumbnail)
+        
+        if let imageUrl = data.thumbnail, data.thumbnail != nil {
             thumbnailView?.imageFromURL(imageUrl)
-        } else {
-            thumbnailView?.image = UIImage(named: AppIdentifiers.defaultThumbnail)
         }
         
         let title = data.title ?? String()

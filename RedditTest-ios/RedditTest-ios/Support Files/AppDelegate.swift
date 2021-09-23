@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
-        
+        UINavigationBar.appearance().isTranslucent = true
+
         let controller = UIViewController.instanceBaseController(with: AppIdentifiers.welcomeController)
         
         startCoodinator = WelcomeCoordinator(controller: controller)

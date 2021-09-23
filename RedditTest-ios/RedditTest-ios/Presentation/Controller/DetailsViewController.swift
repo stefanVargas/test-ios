@@ -26,8 +26,8 @@ class DetailsViewController: BaseViewController {
         self.view.backgroundColor = .redditPurple
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
         viewModel?.bind()
     }
