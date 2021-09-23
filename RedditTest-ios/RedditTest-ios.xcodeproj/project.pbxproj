@@ -85,6 +85,7 @@
 		715392A126FCF48A006E903A /* PaginableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7153927826FCF48A006E903A /* PaginableTableView.swift */; };
 		715392A226FCF48A006E903A /* WelcomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7153927926FCF48A006E903A /* WelcomeMainView.swift */; };
 		715392FA26FCF5FD006E903A /* RedditListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7153927626FCF48A006E903A /* RedditListTableViewCell.xib */; };
+		715392FE26FD00F0006E903A /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715392FD26FD00F0006E903A /* Method.swift */; };
 		719ADDDB26FB8E270063B2B3 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719ADDDA26FB8E270063B2B3 /* DetailsViewModel.swift */; };
 		719ADDDD26FB91860063B2B3 /* ListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719ADDDC26FB91860063B2B3 /* ListViewControllerTests.swift */; };
 		719ADDDF26FB91BE0063B2B3 /* WelcomeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719ADDDE26FB91BE0063B2B3 /* WelcomeControllerTests.swift */; };
@@ -205,6 +206,7 @@
 		7153927726FCF48A006E903A /* RefreshingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshingTableViewCell.swift; sourceTree = "<group>"; };
 		7153927826FCF48A006E903A /* PaginableTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginableTableView.swift; sourceTree = "<group>"; };
 		7153927926FCF48A006E903A /* WelcomeMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeMainView.swift; sourceTree = "<group>"; };
+		715392FD26FD00F0006E903A /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
 		719ADDDA26FB8E270063B2B3 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		719ADDDC26FB91860063B2B3 /* ListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllerTests.swift; sourceTree = "<group>"; };
 		719ADDDE26FB91BE0063B2B3 /* WelcomeControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeControllerTests.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				71295F3D26FA8E03009D910E /* APIRequest.swift */,
 				71295F3926FA2E4E009D910E /* APIProvider.swift */,
 				71295F3B26FA6FD8009D910E /* RedditError.swift */,
+				715392FD26FD00F0006E903A /* Method.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -573,7 +576,6 @@
 				2276C67A3BC80C2A67E98C58 /* Pods-RedditTest-iosTests.debug.xcconfig */,
 				43B79DDE00F651AF62C54972 /* Pods-RedditTest-iosTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -830,6 +832,7 @@
 				71295F0D26F83059009D910E /* BaseCoordinator.swift in Sources */,
 				71295EC726F794A1009D910E /* SceneDelegate.swift in Sources */,
 				71295F2B26F99869009D910E /* PaginableTableView.swift in Sources */,
+				715392FE26FD00F0006E903A /* Method.swift in Sources */,
 				719ADDE326FBAD3A0063B2B3 /* DetailsCoordinator.swift in Sources */,
 				7153929126FCF48A006E903A /* ControllerCoordination.swift in Sources */,
 				7153929C26FCF48A006E903A /* DetailsViewController.swift in Sources */,

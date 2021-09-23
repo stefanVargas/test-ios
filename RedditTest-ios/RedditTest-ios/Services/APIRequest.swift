@@ -11,14 +11,7 @@ import Foundation
 import UIKit
 
 class APIRequest: NSMutableURLRequest {
-    
-    enum Method: String {
-        case GET
-        case POST
-        case PUT
-        case PATCH
-    }
-    
+        
     convenience init?(requestMethod: Method, urlString: String, path: String, bodyParams: [String: String]? = nil) {
         
         guard let url = URL(string: urlString),

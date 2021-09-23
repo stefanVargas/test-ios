@@ -10,8 +10,6 @@ import Foundation
 protocol APIProviderProtocol {
     func getEntryList(params: RedditRequest, path: String,
                       completion: @escaping ResponseCompletion)
-    func getThumbImage(fromUrl: String, completion: @escaping DataCompletion)
-
 }
 
 class APIProvider: APIProviderProtocol {
@@ -38,10 +36,4 @@ class APIProvider: APIProviderProtocol {
             
         }.resume()
     }
-    
-    func getThumbImage(fromUrl: String, completion: @escaping DataCompletion) {
-        
-    }
-    
-    
 }
