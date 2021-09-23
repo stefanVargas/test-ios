@@ -34,6 +34,7 @@ class DetailsViewController: BaseViewController {
     
     func start(entry: RedditEntryData) {
         viewModel = DetailsViewModel(view: self.view)
+        viewModel?.delegate = self
         viewModel?.entry = entry
     }
 }
@@ -47,5 +48,4 @@ extension DetailsViewController: DetailsViewModelDelegate {
         dateLabel?.text = String(entry.created ?? Double.zero)
         commentsLabel?.text = "comments: \(entry.commentsNumber ?? Int.zero)"
     }
-    
 }

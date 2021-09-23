@@ -41,8 +41,9 @@ class RedditListTableViewCell: UITableViewCell {
         let comments = data.commentsNumber ?? Int.zero
         commentsLabel?.text = "comments: \(comments)"
         
-        let entryDate = ((data.created ?? Double.zero) - Double(Int(Date().timeIntervalSince1970))).rounded()
-        entryDateLabel?.text = "date: \(Int(entryDate) / 3600)"
+        let seconds = Int(data.created?.rounded() ?? Double.zero.rounded())
+        let entryDate = String.secondsToLocal(value: seconds)
+        entryDateLabel?.text = "date: \(entryDate)"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

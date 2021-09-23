@@ -51,6 +51,7 @@
 		719ADDDF26FB91BE0063B2B3 /* WelcomeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719ADDDE26FB91BE0063B2B3 /* WelcomeControllerTests.swift */; };
 		719ADDE126FB920A0063B2B3 /* DetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719ADDE026FB920A0063B2B3 /* DetailsViewControllerTests.swift */; };
 		719ADDE326FBAD3A0063B2B3 /* DetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719ADDE226FBAD3A0063B2B3 /* DetailsCoordinator.swift */; };
+		719ADDE526FBE28C0063B2B3 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719ADDE426FBE28C0063B2B3 /* String+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,7 @@
 		719ADDDE26FB91BE0063B2B3 /* WelcomeControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeControllerTests.swift; sourceTree = "<group>"; };
 		719ADDE026FB920A0063B2B3 /* DetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		719ADDE226FBAD3A0063B2B3 /* DetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCoordinator.swift; sourceTree = "<group>"; };
+		719ADDE426FBE28C0063B2B3 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 				71295F0126F823DA009D910E /* UIView+Extension.swift */,
 				71295F2826F98CC3009D910E /* UIViewController+Extension.swift */,
 				71295F4126FAB1F7009D910E /* UIImageView+Extension.swift */,
+				719ADDE426FBE28C0063B2B3 /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				71295F2126F9379E009D910E /* WelcomeViewModel.swift in Sources */,
 				71295F3226FA2B72009D910E /* RedditEntry.swift in Sources */,
 				719ADDDB26FB8E270063B2B3 /* DetailsViewModel.swift in Sources */,
+				719ADDE526FBE28C0063B2B3 /* String+Extension.swift in Sources */,
 				71295F4226FAB1F7009D910E /* UIImageView+Extension.swift in Sources */,
 				71295EFB26F82311009D910E /* UIColor+Extension.swift in Sources */,
 			);
