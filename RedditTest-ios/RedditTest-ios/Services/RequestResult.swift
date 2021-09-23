@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+enum RequestResult<T: Codable> {
+    case success(data: T)
+    case failure(error: RedditError)
+}
+
+typealias ResponseCompletion = (RequestResult<RedditResponse>) -> Void
+typealias DataCompletion = (Bool, Data?) -> Void
