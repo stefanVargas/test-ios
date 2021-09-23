@@ -6,27 +6,41 @@
 //
 
 import XCTest
-
+@testable import RedditTest_ios
 class WelcomeControllerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    var sut: WelcomeViewController!
 
+    override func setUp() {
+        sut = UIViewController.instanceBaseController(with: AppIdentifiers.welcomeController) as? WelcomeViewController
+        sut.awakeFromNib()
+        sut.loadView()
+        sut.viewDidLoad()
+        sut.viewDidAppear(true)
+
+    }
+    
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testMainView() throws {
+        var hasMainView = false
+        if sut.view.isKind(of: WelcomeMainView.self) {
+            hasMainView = true
         }
+        
+        XCTAssertTrue(hasMainView, "View Controller has Main Table View.")
+    }
+
+    func testTitle() throws {
+        
+        XCTAssertTrue(sut.mainView.welcomeLabel.text == "Reddit List", "View Controller has 'Reddit List' as title.")
+    }
+    
+    func testViewModel() throws {
+        
+        XCTAssertTrue(sut.viewModel?.action != nil)
     }
 
 }

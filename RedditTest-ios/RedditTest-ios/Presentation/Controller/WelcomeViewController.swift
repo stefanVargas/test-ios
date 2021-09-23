@@ -9,8 +9,8 @@ import UIKit
 
 class WelcomeViewController: BaseViewController {
     
-    private lazy var mainView =  WelcomeMainView()
-    private var viewModel: WelcomeViewModel?
+    private(set) lazy var mainView =  WelcomeMainView()
+    private(set) var viewModel: WelcomeViewModel?
 
     override func loadView() {
         super.loadView()

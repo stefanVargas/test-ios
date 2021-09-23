@@ -13,7 +13,7 @@ class ListViewController: BaseViewController {
     
     @IBOutlet private(set) weak var paginableTableView: PaginableTableView?
     
-    private var viewModel: ListViewModel?
+    private(set) var viewModel: ListViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()

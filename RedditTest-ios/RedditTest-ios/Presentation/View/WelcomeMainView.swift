@@ -11,7 +11,7 @@ class WelcomeMainView: UIView {
 
     weak var viewModel: BaseViewModelProtocol?
 
-    private lazy var welcomeLabel: UILabel = {
+    private(set) lazy var welcomeLabel: UILabel = {
         
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = true
@@ -24,7 +24,7 @@ class WelcomeMainView: UIView {
         return label
     }()
     
-    private lazy var enterButton: UIButton = {
+    private(set) lazy var enterButton: UIButton = {
         
         var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = true

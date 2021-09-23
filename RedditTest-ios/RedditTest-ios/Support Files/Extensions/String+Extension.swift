@@ -10,15 +10,15 @@ import Foundation
 
 extension String {
     
-    static func secondsToLocal(value: Int) -> String {
+    static func secondsToLocal(value: Float) -> String {
         
-        let epochTime = TimeInterval(value) / 1000
-        let date = Date(timeIntervalSinceNow: epochTime)
+        let epochTime = TimeInterval(value) / 1000.0
+        let date = Date(timeInterval: epochTime, since: Date())
         
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = TimeZone.current
 
-        dateFormatter.dateFormat = "dd/mmm/yyyy H:mm:ss"
+        dateFormatter.dateFormat = "yyyy H:mm:ss"
         
         return dateFormatter.string(from: date)
     }

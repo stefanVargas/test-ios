@@ -41,7 +41,7 @@ class RedditListTableViewCell: UITableViewCell {
         let comments = data.commentsNumber ?? Int.zero
         commentsLabel?.text = "comments: \(comments)"
         
-        let seconds = Int(data.created?.rounded() ?? Double.zero.rounded())
+        let seconds = (data.created?.rounded() ?? Float.zero)
         let entryDate = String.secondsToLocal(value: seconds)
         entryDateLabel?.text = "date: \(entryDate)"
     }

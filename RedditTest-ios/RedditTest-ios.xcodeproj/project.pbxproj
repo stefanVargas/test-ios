@@ -186,8 +186,8 @@
 			children = (
 				719ADDDC26FB91860063B2B3 /* ListViewControllerTests.swift */,
 				719ADDDE26FB91BE0063B2B3 /* WelcomeControllerTests.swift */,
-				71295EDD26F794A4009D910E /* Info.plist */,
 				719ADDE026FB920A0063B2B3 /* DetailsViewControllerTests.swift */,
+				71295EDD26F794A4009D910E /* Info.plist */,
 			);
 			path = "RedditTest-iosTests";
 			sourceTree = "<group>";

@@ -6,27 +6,45 @@
 //
 
 import XCTest
-
+@testable import RedditTest_ios
 class DetailsViewControllerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    var sut: DetailsViewController!
 
+    override func setUp() {
+        sut = UIViewController.instanceBaseController(with: AppIdentifiers.detailsController) as? DetailsViewController
+        sut.awakeFromNib()
+        sut.loadView()
+        sut.viewDidLoad()
+        sut.viewDidAppear(true)
+        let testEntry = RedditEntryData(title: "Esse é o texto para teste!", author: "Stefan", thumbnail: nil, commentsNumber: 1234, created: 1732238837.0)
+        sut.start(entry: testEntry)
+        sut.viewModel?.bind()
+
+    }
+    
+    func testTitle() throws {
+        
+        XCTAssertTrue(sut.titleLabel?.text == "Esse é o texto para teste!", "View Controller has a text for title.")
+    }
+    
+    func testAuthor() throws {
+        
+        XCTAssertTrue(sut.authorLabel?.text == "Stefan", "View Controller has 'Stefan' as title.")
+    }
+    
+    func testComent() throws {
+        
+        XCTAssertTrue(sut.commentsLabel?.text == "comments: 1234", "View Controller has '1234' comments.")
+    }
+    
+    func testViewModel() throws {
+        
+        XCTAssertTrue(sut.viewModel != nil)
+    }
+    
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
+    
 }

@@ -43,9 +43,12 @@ extension DetailsViewController: DetailsViewModelDelegate {
     func fillView() {
         guard let entry = viewModel?.entry else { return }
         thumbImageView?.imageFromURL(entry.thumbnail ?? String())
+        if thumbImageView?.image == nil {
+            thumbImageView?.image = UIImage(named: AppIdentifiers.defaultThumbnail)
+        }
         titleLabel?.text = entry.title
         authorLabel?.text = entry.author
-        dateLabel?.text = String(entry.created ?? Double.zero)
+        dateLabel?.text = String.secondsToLocal(value: entry.created ?? Float.zero)
         commentsLabel?.text = "comments: \(entry.commentsNumber ?? Int.zero)"
     }
 }

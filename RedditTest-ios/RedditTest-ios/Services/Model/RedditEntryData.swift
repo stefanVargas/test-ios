@@ -12,7 +12,7 @@ struct RedditEntryData: Codable {
     var author: String?
     var thumbnail: String?
     var commentsNumber: Int?
-    var created: Double?
+    var created: Float?
     
     private enum CodingKeys: String, CodingKey {
         case commentsNumber = "num_comments"
